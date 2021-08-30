@@ -18,7 +18,7 @@ function TodoForm(props) {
   const handleSubmit = e => {
     e.preventDefault();
 
-    props.onSubmit({
+    props.onSave({
       id: Math.floor(Math.random() * 1000), //refatorar
       text: input
     });

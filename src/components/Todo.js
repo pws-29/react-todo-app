@@ -17,32 +17,40 @@ function Todo({ todos, completeTodo, removeTodo, updateTodo }) {
     });
   };
 
-
-  if (edit.id) {
-    return <TodoForm edit={edit} onSubmit={submitUpdate} />;
+  function isEdit(todo) {
+    if (todo.id === edit.id) {
+      return false
+    } else return true
   }
 
-  //refatorar
-  return todos.map((todo, index) => (
-    <div
-      className={todo.isComplete ? 'todo-row complete' : 'todo-row'}
-      key={index}
-    >
-      <div key={todo.id} onClick={() => completeTodo(todo.id)}>
-        {todo.text}
-      </div>
-      <div className="icons">
-        <RiCloseCircleLine
-          onClick={() => removeTodo(todo.id)}
-          className='delete-icon'
-        />
-        <TiEdit
-          onClick={() => setEdit({ id: todo.id, value: todo.text })}
-          className='edit-icon'
-        />
-      </div>
+  const filteredTodos = todos.filter(isEdit)
+
+  return (
+    <div>
+      {edit.id && <TodoForm edit={edit} onSave={submitUpdate} />}
+
+      {filteredTodos && filteredTodos.map((todo, index) => (
+        <div
+          className={todo.isComplete ? 'todo-row complete' : 'todo-row'}
+          key={index}
+        >
+          <div key={todo.id} onClick={() => completeTodo(todo.id)}>
+            {todo.text}
+          </div>
+          <div className="icons">
+            <RiCloseCircleLine
+              onClick={() => removeTodo(todo.id)}
+              className='delete-icon'
+            />
+            <TiEdit
+              onClick={() => setEdit({ id: todo.id, value: todo.text })}
+              className='edit-icon'
+            />
+          </div>
+        </div>
+      ))}
     </div>
-  ))
+  )
 }
 
 export default Todo

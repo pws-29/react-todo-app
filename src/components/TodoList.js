@@ -32,20 +32,29 @@ function TodoList() {
   };
 
   const completeTodo = id => {
-    let updatedTodos = todos.map(todo => {
-      if (todo.id === id) {
-        todo.isComplete = !todo.isComplete
-      }
+    // let updatedTodos = todos.map(todo => {
+    //   if (todo.id === id) {
+    //     todo.isComplete = !todo.isComplete
+    //   }
 
-      return todo
-    })
-    setTodos(updatedTodos)
+    //   return todo
+    // });
+
+    const updatedTodos = [...todos];
+
+    const targetTodo = updatedTodos.find(todo => todo.id === id);
+
+    targetTodo.isComplete = !targetTodo.isComplete;
+
+    setTodos(updatedTodos);
   };
+
+
 
   return (
     <div>
       <h1>What's the Plan for Today?</h1>
-      <TodoForm onSubmit={addTodo} />
+      <TodoForm onSave={addTodo} />
       <Todo
         todos={todos}
         completeTodo={completeTodo}
